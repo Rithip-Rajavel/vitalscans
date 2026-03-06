@@ -34,5 +34,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     @Query("SELECT a FROM Appointment a WHERE a.patient.id = :patientId ORDER BY a.appointmentDate DESC")
     List<Appointment> findByPatientIdOrderByAppointmentDateDesc(@Param("patientId") Long patientId);
 
+    // Returns appointments assigned to a specific nurse OR still pending (no nurse yet)
+    @Query("SELECT a FROM Appointment a WHERE a.nurse.id = :nurseId OR a.status = com.vitalscan.vitalscans.entity.Appointment.AppointmentStatus.PENDING ORDER BY a.appointmentDate DESC")
+    List<Appointment> findByNurseIdOrPendingOrderByAppointmentDateDesc(@Param("nurseId") Long nurseId);
+
     Optional<Appointment> findByIdAndPatient(Long id, User patient);
 }

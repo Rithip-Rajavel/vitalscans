@@ -66,11 +66,13 @@ public class AppointmentService {
     }
 
     public List<Appointment> getCurrentUserAppointments(User currentUser) {
-        return appointmentRepository.findByPatientOrderByAppointmentDateDesc(currentUser);
+        // Use ID-based query to avoid Hibernate entity identity issues with security-context user
+        return appointmentRepository.findByPatientIdOrderByAppointmentDateDesc(currentUser.getId());
     }
 
     public List<Appointment> getNurseAppointments(User nurse) {
-        return appointmentRepository.findByNurseOrderByAppointmentDateDesc(nurse);
+        // Returns appointments assigned to this nurse OR still pending (nurse=null)
+        return appointmentRepository.findByNurseIdOrPendingOrderByAppointmentDateDesc(nurse.getId());
     }
 
     public List<Appointment> getPendingAppointments() {
