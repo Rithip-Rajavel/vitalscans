@@ -1,5 +1,6 @@
 package com.vitalscan.vitalscans.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "appointments")
 @Data
@@ -21,11 +23,11 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     private User patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "nurse_id")
     private User nurse;
 

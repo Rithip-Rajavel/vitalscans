@@ -127,6 +127,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>collegeClinic</finalName>
 	</build>
-
 </project>

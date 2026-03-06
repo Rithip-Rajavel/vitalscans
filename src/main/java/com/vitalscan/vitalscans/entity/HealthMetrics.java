@@ -1,5 +1,6 @@
 package com.vitalscan.vitalscans.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "health_metrics")
 @Data
@@ -20,7 +22,7 @@ public class HealthMetrics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
